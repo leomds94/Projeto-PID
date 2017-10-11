@@ -76,7 +76,7 @@ A Função de transferência obtida
 
 0,7363 x - 13,7691 
 
-...
+```
 int sensor_pin = A0;
 
 void setup(){
@@ -93,14 +93,14 @@ void loop(){
    
   delay(1000);
 }
-...
+```
 
 2ª etapa:  Controlamos a velocidade do motor 
 
 Essa etapa é bastante simples. O próprio cooler tem um circuito interno que permite você regular a temperatura. Para isso basta você conectar o fio azul na saída de uma porta com pwm. Assim, dependendo do valor que você colocar no pwm ele irá rodar mais rápido ou mais devagar.
 Para ajudar a ver os efeitos, adicionamos um código que nos permite digitar o valor que queremos para o pwm através do terminal. 
 
-...
+```
 int sensor_pin = A0;
 int pwm = 11;
 
@@ -127,7 +127,7 @@ void loop(){
    
   delay(1000);
 }
-...
+```
 
 3ª etapa: Medindo o número de rotações por minuto (RPM) do cooler. 
 
@@ -135,6 +135,7 @@ Essa etapa é um pouco chatinha, mas, mais pelo código, porque a estrutura fís
 
 O sensor que nos permite medir o rpm do cooler funciona da seguinte forma: toda vez que uma das hélices passa pelo sensor magnético dentro do cooler ele manda um sinal para a porta digital. Simples não ! O complicado está em medir quantos sinais foram mandado para porta em um determinado espaço de tempo para definir o valor do rpm. 
 
+```
 int NbTopsFan; 
 int Calc;
 int hallsensor = 2; 
@@ -176,11 +177,13 @@ NbTopsFan = 0;
 
   delay(1000);
 }
+```
 
 4ª etapa: Controle PID 
 
 Agora vamos montar o controle PID. Esse controle irá permitir regular a temperatura. Mas para facilitar vamos primeiro testar o controle P depois o I depois o D e por fim o controle PID. O que é bastante simples, basta ir acrescentando valores às variáveis kp, ki, kd.
 
+```
 int NbTopsFan; 
 int Calc;
 int hallsensor = 2; 
@@ -247,6 +250,7 @@ NbTopsFan = 0;
 
   delay(1000);
 }
+```
 
 4.    CONCLUSÃO
  

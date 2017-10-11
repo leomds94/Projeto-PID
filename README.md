@@ -1,5 +1,5 @@
 # Projeto PID
-**1.	INTRODUÇÃO:**
+## **1.	INTRODUÇÃO:**
 
  - O QUE MEU PROJETO SE PROPÕE A FAZER E COMO EU VOU FAZER ISSO?
 
@@ -14,7 +14,7 @@ Pra fazer esse controle, utilizaremos:
 -	um resistor de 10k ohms e um de 1k ohms 
 -	fios jumper 
 
-**2.	EMBASAMENTO TEÓRICO/PRÁTICO:**
+## **2.	EMBASAMENTO TEÓRICO/PRÁTICO:**
 
 
  - DIAGRAMA FUNCIONAL DO PROJETO
@@ -56,11 +56,11 @@ Para finalizar obtivemos um gráfico dos erros obtidos entre as amostragens feit
  Diagrama de blocos do projeto. Fonte: LucidChart 
 
 
-**3.	 IMPLEMENTAÇÃO:**
+## **3.	 IMPLEMENTAÇÃO:**
 
 Como o nosso controlador é composto por várias etapas, iremos explicar cada etapa separadamente, para depois juntamos tudo. Primeiro iremos explicar como pegamos a temperatura, em seguida como controlamos a velocidade do motor, depois medimos sua velocidade, e por fim, aplicamos o controle PID.
 
-**1ª etapa: medindo a temperatura em graus celsius.**
+### **1ª etapa: medindo a temperatura em graus celsius.**
 
 A estrutura para fazer o sensor de temperatura funcionar é bastante simples. Basta conectar o gnd no pino da direita, o vcc no pino da esquerda e o pino do meio vai em uma das estradas analogicas. 
 
@@ -95,7 +95,7 @@ void loop(){
 }
 ```
 
-**2ª etapa:  Controlamos a velocidade do motor**
+### **2ª etapa:  Controlamos a velocidade do motor**
 
 Essa etapa é bastante simples. O próprio cooler tem um circuito interno que permite você regular a temperatura. Para isso basta você conectar o fio azul na saída de uma porta com pwm. Assim, dependendo do valor que você colocar no pwm ele irá rodar mais rápido ou mais devagar.
 Para ajudar a ver os efeitos, adicionamos um código que nos permite digitar o valor que queremos para o pwm através do terminal. 
@@ -129,7 +129,7 @@ void loop(){
 }
 ```
 
-**3ª etapa: Medindo o número de rotações por minuto (RPM) do cooler.**
+### **3ª etapa: Medindo o número de rotações por minuto (RPM) do cooler.**
 
 Essa etapa é um pouco chatinha, mas, mais pelo código, porque a estrutura física é muito simples. Basta seguir o esquema abaixo. 
 
@@ -179,7 +179,7 @@ NbTopsFan = 0;
 }
 ```
 
-**4ª etapa: Controle PID**
+### **4ª etapa: Controle PID**
 
 Agora vamos montar o controle PID. Esse controle irá permitir regular a temperatura. Mas para facilitar vamos primeiro testar o controle P depois o I depois o D e por fim o controle PID. O que é bastante simples, basta ir acrescentando valores às variáveis kp, ki, kd.
 
@@ -252,9 +252,9 @@ NbTopsFan = 0;
 }
 ```
 
-**4.    CONCLUSÃO**
+## **4.    CONCLUSÃO**
  
-**4.1.        APLICAÇÕES UTILIZANDO ESTE PROJETO**
+### **4.1.        APLICAÇÕES UTILIZANDO ESTE PROJETO**
  
 Esse projeto pode ser utilizado para o controle de temperatura em qualquer ambiente, desde uma pequena caixa (quadro elétrico, aquário,...) como também uma subestação, utilizando um ventilador maior ou um exaustor para diminuir a temperatura do local.
 Alguns quadros elétricos possuem equipamentos que liberam muito calor, podendo ocasionar algum incêndio. Com isso, o nosso produto pode ser instalado nesses tipos de quadro para manter sempre uma temperatura agradável. A figura abaixo mostra um quadro com um ventilador instalado para essa finalidade.
@@ -267,7 +267,7 @@ Outra aplicação com esse projeto seria a instalação em mini-racks, com isso,
 Também é uma solução para quem possui aquários e deseja controlar a temperatura da água. Existem alguns tipos de peixes que não toleram variações grandes e por isso devem ser criados com a máxima estabilidade. 
 
  
-**4.2.        MELHORIAS**
+### **4.2.        MELHORIAS**
  
 Esse produto pode ser melhorado adicionando alguns equipamentos e aumentando as funcionalidades e finalidades.
  
@@ -279,7 +279,7 @@ Caso o usuário queira variar a temperatura desejada, pode-se colocar um display
 Exemplo 02: Redução do controlador.
 Uma melhoria significativa do produto seria na troca do controlador. As funcionalidades e o programa embarcado são muito simples para esse projeto, com isso, um microcontrolador básico com menos memória, quantidade de pinos digitais e analógicos reduziria o custo. Além disso, o tamanho físico de uma placa eletrônica seria bem mais compacta, já que seria confeccionada com menos quantidade de trilhas e componentes, e integrando um microcontrolador PIC ou um ARM no lugar de um Arduino completo.
  
-**4.3.        CUSTOS DO PRODUTO**
+### **4.3.        CUSTOS DO PRODUTO**
  
 A seguir, é mostrado o preço dos materiais mais significativos do projeto. Esses valores foram baseados nos sites www.mercadolivre.com.br e www.autocore.com.br.
  
@@ -291,13 +291,13 @@ Fonte 12Vcc	-	-	10,00
 TOTAL	 	 	74,29
  
  
-**4.4.        VALOR DO PRODUTO**
+### **4.4.        VALOR DO PRODUTO**
  
 Baseado no custo do item anterior, e colocando uma margem de lucro de 50%, o valor para ser comercializado seria de R$ 110,00.
 As aplicações já listadas do nosso projeto (controle de temperatura em quadros elétricos, mini-racks e aquários) já existem em alguns produtos no mercado. Para se ter uma comparação, o preço de um AquaCool Master Fan  que serve para ser instalado em um aquário, custa R$ 224,00. Um kit básico para rack com 2 ventiladores custa R$ 134,00 com o frete.
  
 
-**4.5.        REFERÊNCIAS DE MATERIAIS**
+## **4.5.        REFERÊNCIAS DE MATERIAIS**
 
 Arduino Uno Rev3
 https://www.autocorerobotica.com.br/arduino-uno 

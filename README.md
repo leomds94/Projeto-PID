@@ -60,7 +60,7 @@ Para finalizar obtivemos um gráfico dos erros obtidos entre as amostragens feit
 
 Como o nosso controlador é composto por várias etapas, iremos explicar cada etapa separadamente, para depois juntamos tudo. Primeiro iremos explicar como pegamos a temperatura, em seguida como controlamos a velocidade do motor, depois medimos sua velocidade, e por fim, aplicamos o controle PID.
 
-**1ª etapa: medindo a temperatura em graus celsius. **
+**1ª etapa: medindo a temperatura em graus celsius.**
 
 A estrutura para fazer o sensor de temperatura funcionar é bastante simples. Basta conectar o gnd no pino da direita, o vcc no pino da esquerda e o pino do meio vai em uma das estradas analogicas. 
 
@@ -95,7 +95,7 @@ void loop(){
 }
 ```
 
-**2ª etapa:  Controlamos a velocidade do motor **
+**2ª etapa:  Controlamos a velocidade do motor**
 
 Essa etapa é bastante simples. O próprio cooler tem um circuito interno que permite você regular a temperatura. Para isso basta você conectar o fio azul na saída de uma porta com pwm. Assim, dependendo do valor que você colocar no pwm ele irá rodar mais rápido ou mais devagar.
 Para ajudar a ver os efeitos, adicionamos um código que nos permite digitar o valor que queremos para o pwm através do terminal. 
@@ -129,7 +129,7 @@ void loop(){
 }
 ```
 
-**3ª etapa: Medindo o número de rotações por minuto (RPM) do cooler. **
+**3ª etapa: Medindo o número de rotações por minuto (RPM) do cooler.**
 
 Essa etapa é um pouco chatinha, mas, mais pelo código, porque a estrutura física é muito simples. Basta seguir o esquema abaixo. 
 
@@ -179,7 +179,7 @@ NbTopsFan = 0;
 }
 ```
 
-**4ª etapa: Controle PID **
+**4ª etapa: Controle PID**
 
 Agora vamos montar o controle PID. Esse controle irá permitir regular a temperatura. Mas para facilitar vamos primeiro testar o controle P depois o I depois o D e por fim o controle PID. O que é bastante simples, basta ir acrescentando valores às variáveis kp, ki, kd.
 

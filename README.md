@@ -76,8 +76,7 @@ A Função de transferência obtida
 
 0,7363 x - 13,7691 
 
-
-
+...
 int sensor_pin = A0;
 
 void setup(){
@@ -94,13 +93,14 @@ void loop(){
    
   delay(1000);
 }
+...
 
 2ª etapa:  Controlamos a velocidade do motor 
 
 Essa etapa é bastante simples. O próprio cooler tem um circuito interno que permite você regular a temperatura. Para isso basta você conectar o fio azul na saída de uma porta com pwm. Assim, dependendo do valor que você colocar no pwm ele irá rodar mais rápido ou mais devagar.
 Para ajudar a ver os efeitos, adicionamos um código que nos permite digitar o valor que queremos para o pwm através do terminal. 
 
-
+...
 int sensor_pin = A0;
 int pwm = 11;
 
@@ -127,6 +127,7 @@ void loop(){
    
   delay(1000);
 }
+...
 
 3ª etapa: Medindo o número de rotações por minuto (RPM) do cooler. 
 

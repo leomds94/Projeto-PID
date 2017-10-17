@@ -12,13 +12,10 @@ unsigned long pulseDuration = 0;
 double frequency = 0;
 int rpmValue = 0;
 
-int kp  = 1.5;
-float ki = 0.2;
-int kd = 0;
-int setPoint = 25;
-int erro;
+double Input, Output, Setpoint, errSum, lastErr;
+double kp, ki, kd;
+
 int i = 0;
-int last = 0;
 float temp = 0;
 char buf[20];
 
@@ -31,6 +28,20 @@ void getRpm () {
   rpmValue = frequency / 2 * 60;
  // rpmValue = temp*30;
 }
+
+void Compute(){
+ unsigned long now = millis();
+ int timeChange = (now - lastTime);
+ if(timeChange>=SampleTime){
+ double error = Setpoint - Input;
+ errSum += error;
+ double dErr = (error - lastErr);
+ Output = kp * error + ki * errSum + kd * dErr;
+ lastErr = error;
+ lastTime = now;
+ }
+}
+
 
 void setup() {
   Serial.begin(9600);

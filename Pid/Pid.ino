@@ -42,6 +42,20 @@ void Compute(){
  }
 }
 
+void SetTunings(double Kp, double Ki, double Kd){
+ double SampleTimeInSec = ((double)SampleTime)/1000;
+ kp = Kp;
+ ki = Ki * SampleTimeInSec;
+ kd = Kd / SampleTimeInSec;
+}
+void SetSampleTime(int NewSampleTime){
+ if (NewSampleTime > 0){
+ double ratio = (double)NewSampleTime / (double)SampleTime;
+ ki *= ratio;
+ kd /= ratio;
+ SampleTime = (unsigned long)NewSampleTime;
+ }
+}
 
 void setup() {
   Serial.begin(9600);

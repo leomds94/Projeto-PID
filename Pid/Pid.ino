@@ -12,7 +12,7 @@ unsigned long pulseDuration = 0;
 double frequency = 0;
 int rpmValue = 0;
 
-double Input, Output, Setpoint, errSum, lastErr;
+double Input, Output, Setpoint, errSum, lastInput;
 double kp, ki, kd;
 
 int i = 0;
@@ -35,9 +35,9 @@ void Compute(){
  if(timeChange>=SampleTime){
  double error = Setpoint - Input;
  errSum += error;
- double dErr = (error - lastErr);
- Output = kp * error + ki * errSum + kd * dErr;
- lastErr = error;
+ double dInput = (Input - lastInput);
+ Output = kp * error + ki * errSum - kd * dInput;
+ lastInput = Input;
  lastTime = now;
  }
 }

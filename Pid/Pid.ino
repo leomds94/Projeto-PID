@@ -17,6 +17,8 @@ double Input, Output, Setpoint, errSum, lastInput;
 double kp, ki, kd;
 int SampleTime = 1000;
 
+double ITerm, outMax, outMin;
+
 int i = 0;
 float temp = 0;
 char buf[20];
@@ -31,27 +33,43 @@ void getRpm () {
   // rpmValue = temp*30;
 }
 
-void Compute() {
-  unsigned long now = millis();
-  int timeChange = (now - lastTime);
-  if (timeChange >= SampleTime) {
-    double error = Setpoint - Input;
-    errSum += error;
-    double dInput = (Input - lastInput);
-    double outTranslate = map(temp, 18, 50, 0, 255);
-    Output = kp * error + ki * errSum - kd * dInput;
-    lastInput = Input;
-    lastTime = now;
-    sprintf(buf, "Erro: %d", error);
-    Serial.println(buf);
-  }
+void Compute(){
+ unsigned long now = millis();
+ int timeChange = (now - lastTime);
+ if(timeChange>=SampleTime){
+  double error = Setpoint - Input;
+  double outTranslate = map(temp, 18, 50, 0, 255);
+  ITerm += (ki * error);
+  if (ITerm > outMax) ITerm = outMax;
+  else if (ITerm < outMin) ITerm = outMin;
+  double dInput = (Input - lastInput);
+  Output = kp * error + ITerm - kd * dInput;
+  if (Output > outMax) Output = outMax;
+  else if (Output < outMin) Output = outMin;
+  lastInput = Input;
+  lastTime = now;
+  sprintf(buf, "Erro: %d", error);
+  Serial.println(buf);
+ }
 }
 
-void SetTunings(double Kp, double Ki, double Kd) {
-  double SampleTimeInSec = ((double)SampleTime) / 1000;
-  kp = Kp;
-  ki = Ki * SampleTimeInSec;
-  kd = Kd / SampleTimeInSec;
+void SetOutputLimits(double Min, double Max)
+{
+ if(Min > Max) return;
+ outMin = Min;
+ outMax = Max;
+
+ if(Output > outMax) Output = outMax;
+ else if(Output < outMin) Output = outMin;
+ if(ITerm> outMax) ITerm= outMax;
+ else if(ITerm< outMin) ITerm= outMin;
+}
+void SetTunings(double Kp, double Ki, double Kd){
+ double SampleTimeInSec = ((double)SampleTime)/1000;
+ kp = Kp;
+ ki = Ki * SampleTimeInSec;
+ kd = Kd / SampleTimeInSec;
+
 }
 
 void SetSampleTime(int NewSampleTime) {

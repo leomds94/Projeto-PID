@@ -12,8 +12,10 @@ unsigned long pulseDuration = 0;
 double frequency = 0;
 int rpmValue = 0;
 
+unsigned long lastTime;
 double Input, Output, Setpoint, errSum, lastInput;
 double kp, ki, kd;
+int SampleTime = 1000;
 
 double ITerm, outMax, outMin;
 
@@ -28,7 +30,7 @@ void getRpm () {
   pulseDuration = pulseIn(coolerState, LOW);
   frequency = 1000000 / pulseDuration;
   rpmValue = frequency / 2 * 60;
- // rpmValue = temp*30;
+  // rpmValue = temp*30;
 }
 
 void Compute(){
@@ -36,6 +38,7 @@ void Compute(){
  int timeChange = (now - lastTime);
  if(timeChange>=SampleTime){
   double error = Setpoint - Input;
+  double outTranslate = map(temp, 18, 50, 0, 255);
   ITerm += (ki * error);
   if (ITerm > outMax) ITerm = outMax;
   else if (ITerm < outMin) ITerm = outMin;
@@ -45,6 +48,8 @@ void Compute(){
   else if (Output < outMin) Output = outMin;
   lastInput = Input;
   lastTime = now;
+  sprintf(buf, "Erro: %d", error);
+  Serial.println(buf);
  }
 }
 
@@ -64,14 +69,16 @@ void SetTunings(double Kp, double Ki, double Kd){
  kp = Kp;
  ki = Ki * SampleTimeInSec;
  kd = Kd / SampleTimeInSec;
+
 }
-void SetSampleTime(int NewSampleTime){
- if (NewSampleTime > 0){
- double ratio = (double)NewSampleTime / (double)SampleTime;
- ki *= ratio;
- kd /= ratio;
- SampleTime = (unsigned long)NewSampleTime;
- }
+
+void SetSampleTime(int NewSampleTime) {
+  if (NewSampleTime > 0) {
+    double ratio = (double)NewSampleTime / (double)SampleTime;
+    ki *= ratio;
+    kd /= ratio;
+    SampleTime = (unsigned long)NewSampleTime;
+  }
 }
 
 void setup() {
@@ -82,7 +89,6 @@ void setup() {
   pinMode(coolerPwm, INPUT);
   lcd.begin(16, 2);
   getRpm();
-  last = setPoint;
 }
 
 void loop () {
@@ -103,45 +109,32 @@ void loop () {
   Serial.println(buf);
   lcd.print(buf);
 
-
-  // Pegando erro da temperatura
-  int atual = temp;
-  int erro = abs(last - atual);
-  last = atual;
-
   // Regra de três entre temperatura e RPM estimado
-  value = map(temp, 18, 50, 0, 255);
+  Input = map(temp, 18, 50, 0, 255);
 
   // Realizando o PID
-  int  p = erro * kp;
-  i += erro * ki;
-  int d = (atual - last) * kd;
-
-  int  pid = value - (p + i + d);
+  Compute();
 
   //Realizando pid no RPM
-  rpmValue = temp*(pid/100);
+  rpmValue = temp * (Output / 100);
 
 
   // Mostrando no serial port os dados PID e Erro
-  sprintf(buf, "Erro: %d", erro);
-  Serial.println(buf);
-  sprintf(buf, "P: %d", p);
+  sprintf(buf, "P: %d", kp);
   Serial.println(buf);
   char str_i[10];
-  dtostrf(i, 4, 2, str_i);
   sprintf(buf, "I: %s", str_i);
   Serial.println(buf);
-  sprintf(buf, "D: %d", d);
+  sprintf(buf, "D: %d", kd);
   Serial.println(buf);
-  sprintf(buf, "PID: %d", pid);
+  sprintf(buf, "PID: %d", Output);
   Serial.println(buf);
 
   delay (1000);
 
   // Mostrando pwm que regula a velocidade do cooler
   sprintf(buf, "PWM: %d", value);
-  rpmValue = value*8;
+  rpmValue = value * 8;
   Serial.println(buf);
 
   analogWrite(coolerPwm, value);

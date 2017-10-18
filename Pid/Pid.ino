@@ -15,6 +15,8 @@ int rpmValue = 0;
 double Input, Output, Setpoint, errSum, lastInput;
 double kp, ki, kd;
 
+double ITerm, outMax, outMin;
+
 int i = 0;
 float temp = 0;
 char buf[20];
@@ -33,15 +35,30 @@ void Compute(){
  unsigned long now = millis();
  int timeChange = (now - lastTime);
  if(timeChange>=SampleTime){
- double error = Setpoint - Input;
- errSum += error;
- double dInput = (Input - lastInput);
- Output = kp * error + ki * errSum - kd * dInput;
- lastInput = Input;
- lastTime = now;
+  double error = Setpoint - Input;
+  ITerm += (ki * error);
+  if (ITerm > outMax) ITerm = outMax;
+  else if (ITerm < outMin) ITerm = outMin;
+  double dInput = (Input - lastInput);
+  Output = kp * error + ITerm - kd * dInput;
+  if (Output > outMax) Output = outMax;
+  else if (Output < outMin) Output = outMin;
+  lastInput = Input;
+  lastTime = now;
  }
 }
 
+void SetOutputLimits(double Min, double Max)
+{
+ if(Min > Max) return;
+ outMin = Min;
+ outMax = Max;
+
+ if(Output > outMax) Output = outMax;
+ else if(Output < outMin) Output = outMin;
+ if(ITerm> outMax) ITerm= outMax;
+ else if(ITerm< outMin) ITerm= outMin;
+}
 void SetTunings(double Kp, double Ki, double Kd){
  double SampleTimeInSec = ((double)SampleTime)/1000;
  kp = Kp;

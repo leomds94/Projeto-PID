@@ -18,6 +18,10 @@ double kp, ki, kd;
 int SampleTime = 1000;
 
 double ITerm, outMax, outMin;
+bool inAuto = false;
+
+#define MANUAL 0
+#define AUTOMATIC 1
 
 int i = 0;
 float temp = 0;
@@ -34,6 +38,7 @@ void getRpm () {
 }
 
 void Compute(){
+ if(!inAuto) return;
  unsigned long now = millis();
  int timeChange = (now - lastTime);
  if(timeChange>=SampleTime){
@@ -51,6 +56,11 @@ void Compute(){
   sprintf(buf, "Erro: %d", error);
   Serial.println(buf);
  }
+}
+
+void SetMode(int Mode)
+{
+  inAuto = (Mode == AUTOMATIC);
 }
 
 void SetOutputLimits(double Min, double Max)

@@ -58,11 +58,6 @@ void Compute(){
  }
 }
 
-void SetMode(int Mode)
-{
-  inAuto = (Mode == AUTOMATIC);
-}
-
 void SetOutputLimits(double Min, double Max)
 {
  if(Min > Max) return;
@@ -89,6 +84,24 @@ void SetSampleTime(int NewSampleTime) {
     kd /= ratio;
     SampleTime = (unsigned long)NewSampleTime;
   }
+}
+
+void SetMode(int Mode)
+{
+    bool newAuto = (Mode == AUTOMATIC);
+    if(newAuto && !inAuto)
+    {  /*we just went from manual to auto*/
+        Initialize();
+    }
+    inAuto = newAuto;
+}
+ 
+void Initialize()
+{
+   lastInput = Input;
+   ITerm = Output;
+   if(ITerm> outMax) ITerm= outMax;
+   else if(ITerm< outMin) ITerm= outMin;
 }
 
 void setup() {

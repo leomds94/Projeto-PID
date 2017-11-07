@@ -15,48 +15,6 @@ Pra fazer esse controle, utilizaremos:
 -	um resistor de 10k ohms e um de 1k ohms 
 -	fios jumper 
 
-## **2.	EMBASAMENTO TEÓRICO/PRÁTICO:**
-
-
- - DIAGRAMA FUNCIONAL DO PROJETO
-
- 
-
-Diagrama funcional do projeto. Fonte: LucidChart 
-
-
-- ESQUEMÁTICO DO PROJETO
-Esquemático do projeto. Fonte: tinkercad 
-
-
-
- - FUNÇÃO DE TRANSFERÊNCIA DE MALHA ABERTA
-
-A estimativa da função de transferência foi gerada através de um método de controle digital no qual se pega uma amostragem como mostra o gráfico a seguir:
-
- 
-
-e realiza-se o método de regressão exponencial no Wolfram Alpha ou MatLab para obter a função de transferência. Neste caso obtemos:
-
- 
-
-Para finalizar obtivemos um gráfico dos erros obtidos entre as amostragens feitas:
-
-  
-
-
-
-
-
-
-
-
-
-
- - DIAGRAMA DE BLOCOS COMPLETO
- Diagrama de blocos do projeto. Fonte: LucidChart 
-
-
 ## **3.	 IMPLEMENTAÇÃO:**
 
 Como o nosso controlador é composto por várias etapas, iremos explicar cada etapa separadamente, para depois juntamos tudo. Primeiro iremos explicar como pegamos a temperatura, em seguida como controlamos a velocidade do motor, depois medimos sua velocidade, e por fim, aplicamos o controle PID.

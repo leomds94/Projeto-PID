@@ -19,22 +19,18 @@ Pra fazer esse controle, utilizaremos:
 
 Como o nosso controlador é composto por várias etapas, iremos explicar cada etapa separadamente, para depois juntamos tudo. Primeiro iremos explicar como pegamos a temperatura, em seguida como controlamos a velocidade do motor, depois medimos sua velocidade, e por fim, aplicamos o controle PID.
 
-### **1ª etapa: medindo a temperatura em graus celsius.**
+### **1ª etapa: obtendo a temperatura.**
 
-A estrutura para fazer o sensor de temperatura funcionar é bastante simples. Basta conectar o gnd no pino da direita, o vcc no pino da esquerda e o pino do meio vai em uma das estradas analogicas. 
-
- 
-
-O código também é bastante simples. So tenha mais atenção a função que transforma o valor obtido na porta analógica em graus celsius. 
-
-Para chegar a essa função de transferência, primeiro obtivemos o valor que apresentava na porta analógica quando colocávamos o sensor sobre temperaturas pré-estabelecidas. As temperaturas que usamos sao 0° que obtivemos com água quase congelada, 100° que obtivemos com a água fervendo. E 31° que era a temperatura  ambiente quando foi medido.
-
-Para achar a função de transferência nós usamos o site wolframalpha. Para achar a função de transferência vamos usar regressão.  Na barra de pesquisa digite “linear fit”, que é uma regressão linear, que chegamos a conclusão que seria a melhor regressão, e dê um enter.  No campo de entrada de dados  coloque os pontos {{16,0},{65,31},{153,100}}. Esse pontos são estruturados em valores de x e y. O y é o valor em graus celsius das temperaturas que usamos como medida, e o X é o valor obtido na entrada analógica, e impressa no terminal.
-
-A Função de transferência obtida
-
-0,7363 x - 13,7691 
-
+![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/Esquematico2.png)
+ <p>
+	Essa etapa consiste em pegar o valor analogica do sensor e converter para graus celsius. Para isso, você deverá achar uma função de transferência que faça essa conversão.
+</p><p>
+	Para fazer a medição nós usamos três valores de referência  temperatura de congelamento da água (0°) temperatura de evaporação da água (100°) e a temperatura ambiente (que no momento era 31° mas pode variar). 
+</p><p>
+	Com esse dados obtivemos a função de transferência, através de um processo matemático chamado regressão.  
+</p><p>	
+	A Função de transferência obtida: 0,7363 x - 13,7691 
+</p>		
 ```ino
 int sensor_pin = A0;
 
@@ -43,7 +39,7 @@ void setup(){
 }
 
 void loop(){
-  int leitura = analogRead(sensor_pin);
+  int leitura = analogRead(sensor_pin); 
   float temperatura = 0,7363 x - 13,7691;
     Serial.print(‘V :  ’);
   Serial.println(leitura);
@@ -58,6 +54,8 @@ void loop(){
 
 Essa etapa é bastante simples. O próprio cooler tem um circuito interno que permite você regular a temperatura. Para isso basta você conectar o fio azul na saída de uma porta com pwm. Assim, dependendo do valor que você colocar no pwm ele irá rodar mais rápido ou mais devagar.
 Para ajudar a ver os efeitos, adicionamos um código que nos permite digitar o valor que queremos para o pwm através do terminal. 
+
+# 
 
 ```ino
 int sensor_pin = A0;

@@ -23,14 +23,12 @@ Como o nosso controlador é composto por várias etapas, iremos explicar cada et
 
 ![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/Esquematico2.png)
  <p>
-	Essa etapa consiste em pegar o valor analogica do sensor e converter para graus celsius. Para isso, você deverá achar uma função de transferência que faça essa conversão.
-</p><p>
-	Para fazer a medição nós usamos três valores de referência  temperatura de congelamento da água (0°) temperatura de evaporação da água (100°) e a temperatura ambiente (que no momento era 31° mas pode variar). 
-</p><p>
-	Com esse dados obtivemos a função de transferência, através de um processo matemático chamado regressão.  
-</p><p>	
+	Essa etapa consiste em pegar o valor analogica do sensor e converter para graus celsius. Para isso, você deverá achar uma função de transferência que faça essa conversão.Para fazer a medição nós usamos três valores de referência  temperatura de congelamento da água (0°) temperatura de evaporação da água (100°) e a temperatura ambiente (que no momento era 31° mas pode variar). Com esse dados obtivemos a função de transferência, através de um processo matemático chamado regressão.  
+</p>
+<p>	
 	A Função de transferência obtida: 0,7363 x - 13,7691 
-</p>		
+</p>	
+
 ```ino
 int sensor_pin = A0;
 

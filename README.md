@@ -3,11 +3,9 @@
 # Controlado a temperatura com sensor LM35, cooler de pc com 4 fios e um sistema de controle PID.
 
 ## **1.	INTRODUÇÃO:**
-
-
-
+<p>
 	Ola pessoal, neste artigo iremos mostrar como projetar um sistema de regulação de temperatura, através de um sensor de temperatura LM35, um cooler de quatro fios e um arduino com um controle PID. Esse projeto se propõe a estabilizar a temperatura em um valor pré definido. Se a temperatura variar, ele tentará se estabilizar através de um controle. Este projeto irá lhe ensinar a trabalhar com um cooler 4 fios, um sensor LM35 e projetar um controle proporcional simples. 
-
+</p>
 Pra fazer esse controle, utilizaremos:
 
 -	Um arduino, como controlador

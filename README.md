@@ -209,52 +209,120 @@ NbTopsFan = 0;
 }
 ```
 
-## **4.    CONCLUSÃO**
+
+## **4. MELHORIAS
+
+### **4.1 SAMPLE TIME
+
+### **4.2 DERIVATIVE KICK
+
+### **4.3 ON-THE-FLY TUNING CHANGES
+
+### **4.4 RESET WINDUP MITIGATION
+
+A melhoria de Reset Windup cria limites, de máximo e mínimo, para o cálculo do ki e para a saída.
+
+A correção da soma do erro ki (errSum) é substituída para ITerm += (ki * error); e esse ITerm tem que se enquadrar a uma faixa entre o outMin e o outMax.
+O cálculo da saída é bem parecido ao ITerm porque também tem que se enquadrar a uma faixa entre o outMin e o outMax.
+
+Os valores de outMin e outMax são calculados na função a seguir:
+
+void SetOutputLimits(double Min, double Max) 
+{
+	if(Min > Max) return;
+	outMin = Min;
+	outMax = Max;
+
+	if(Output > outMax) Output = outMax;
+	else if(Output < outMin) Output = outMin;
+	
+	if(ITerm> outMax) ITerm= outMax;
+	else if(ITerm< outMin) ITerm= outMin;
+} 
  
-### **4.1.        APLICAÇÕES UTILIZANDO ESTE PROJETO**
+
+De acordo com os testes feitos, os valores atribuídos são:
+	outMin = 0;
+	outMax = 255;
+	
+### **4.5 ON/OFF (AUTO/MANUAL)
+
+### **4.6 INITIALIZATION
+
+A melhoria de Initialization é utilizada quando o controlador inicializa sem carga ou retorna ao seu estado de automático. Nas duas ocasiões, o controlador pode imprimir um valor de saída muito indesejado, como algo bem distante do SetPoint. 
+
+A programação executa a função “initialize()” quando o controlador inicializa o modo “automático” e parte com os valores como se ele estivesse sempre nesse modo.
+
+bool inAuto = false; 
+#define MANUAL 0
+#define AUTOMATIC 1
+
+…
+ 
+void SetMode(int Mode)
+{
+    bool newAuto = (Mode == AUTOMATIC);
+    if(newAuto && !inAuto)
+    {  /*we just went from manual to auto*/
+        Initialize();
+    }
+    inAuto = newAuto;
+}
+ 
+void Initialize()
+{
+   lastInput = Input;
+   ITerm = Output;
+   if(ITerm> outMax) ITerm= outMax;
+   else if(ITerm< outMin) ITerm= outMin;
+}
+
+### **4.7 CONTROLLER DIRECTION
+
+
+## **5.    CONCLUSÃO**
+ 
+### **5.1.        APLICAÇÕES UTILIZANDO ESTE PROJETO**
  
 Esse projeto pode ser utilizado para o controle de temperatura em qualquer ambiente, desde uma pequena caixa (quadro elétrico, aquário,...) como também uma subestação, utilizando um ventilador maior ou um exaustor para diminuir a temperatura do local.
 Alguns quadros elétricos possuem equipamentos que liberam muito calor, podendo ocasionar algum incêndio. Com isso, o nosso produto pode ser instalado nesses tipos de quadro para manter sempre uma temperatura agradável. A figura abaixo mostra um quadro com um ventilador instalado para essa finalidade.
 
-  
+![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/Painel Eletrico.jpg)
  
 Outra aplicação com esse projeto seria a instalação em mini-racks, com isso, a temperatura interna seria controlada, diminuindo o custo com energia.
  
- 
+![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/rack.jpg)
+
 Também é uma solução para quem possui aquários e deseja controlar a temperatura da água. Existem alguns tipos de peixes que não toleram variações grandes e por isso devem ser criados com a máxima estabilidade. 
 
  
-### **4.2.        MELHORIAS**
+### **5.2.        MELHORIAS**
  
 Esse produto pode ser melhorado adicionando alguns equipamentos e aumentando as funcionalidades e finalidades.
  
 Exemplo 01: Variação de temperatura.
 Caso o usuário queira variar a temperatura desejada, pode-se colocar um display com botões. Com isso, esse produto poderia ser utilizado tanto em locais mais frios como mais quentes, já que há uma facilidade maior de alterar a temperatura desejada. Na figura abaixo, é mostrado um modelo já comercializado de como isso é possível.
 
-  
+![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/Variador de temperatura.jpg)  
  
 Exemplo 02: Redução do controlador.
 Uma melhoria significativa do produto seria na troca do controlador. As funcionalidades e o programa embarcado são muito simples para esse projeto, com isso, um microcontrolador básico com menos memória, quantidade de pinos digitais e analógicos reduziria o custo. Além disso, o tamanho físico de uma placa eletrônica seria bem mais compacta, já que seria confeccionada com menos quantidade de trilhas e componentes, e integrando um microcontrolador PIC ou um ARM no lugar de um Arduino completo.
  
-### **4.3.        CUSTOS DO PRODUTO**
+### **5.3.        CUSTOS DO PRODUTO**
  
 A seguir, é mostrado o preço dos materiais mais significativos do projeto. Esses valores foram baseados nos sites www.mercadolivre.com.br e www.autocore.com.br.
  
-MATERIAL	REFÊRENCIA	FABRICANTE	PREÇO R$
-Arduino	Uno Rev3	Arduino	26,80
-Sensor de Temperatura	CILM35DZ	National Instruments	7,50
-Cooler	E97375-001	intel	29,99
-Fonte 12Vcc	-	-	10,00
-TOTAL	 	 	74,29
+![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/preços.jpg)  
  
  
-### **4.4.        VALOR DO PRODUTO**
+### **5.4.        VALOR DO PRODUTO**
  
 Baseado no custo do item anterior, e colocando uma margem de lucro de 50%, o valor para ser comercializado seria de R$ 110,00.
 As aplicações já listadas do nosso projeto (controle de temperatura em quadros elétricos, mini-racks e aquários) já existem em alguns produtos no mercado. Para se ter uma comparação, o preço de um AquaCool Master Fan  que serve para ser instalado em um aquário, custa R$ 224,00. Um kit básico para rack com 2 ventiladores custa R$ 134,00 com o frete.
  
+![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/aquaCool.jpg)  
 
-## **4.5.        REFERÊNCIAS DE MATERIAIS**
+## **5.5.        REFERÊNCIAS DE MATERIAIS**
 
 Arduino Uno Rev3
 https://www.autocorerobotica.com.br/arduino-uno 

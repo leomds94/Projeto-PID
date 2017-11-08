@@ -242,6 +242,7 @@ void SetOutputLimits(double Min, double Max)
  
 
 De acordo com os testes feitos, os valores atribuídos são:
+
 	outMin = 0;
 	outMax = 255;
 	
@@ -257,24 +258,24 @@ bool inAuto = false;
 #define MANUAL 0
 #define AUTOMATIC 1
 
-…
- 
+...
+
 void SetMode(int Mode)
 {
-    bool newAuto = (Mode == AUTOMATIC);
-    if(newAuto && !inAuto)
-    {  /*we just went from manual to auto*/
-        Initialize();
-    }
-    inAuto = newAuto;
+	bool newAuto = (Mode == AUTOMATIC);
+	if(newAuto && !inAuto)
+	{  /*we just went from manual to auto*/
+       		Initialize();
+    	}
+    	inAuto = newAuto;
 }
  
 void Initialize()
 {
-   lastInput = Input;
-   ITerm = Output;
-   if(ITerm> outMax) ITerm= outMax;
-   else if(ITerm< outMin) ITerm= outMin;
+	lastInput = Input;
+	ITerm = Output;
+	if(ITerm> outMax) ITerm= outMax;
+	else if(ITerm< outMin) ITerm= outMin;
 }
 
 ### **4.7 CONTROLLER DIRECTION
@@ -287,7 +288,7 @@ void Initialize()
 Esse projeto pode ser utilizado para o controle de temperatura em qualquer ambiente, desde uma pequena caixa (quadro elétrico, aquário,...) como também uma subestação, utilizando um ventilador maior ou um exaustor para diminuir a temperatura do local.
 Alguns quadros elétricos possuem equipamentos que liberam muito calor, podendo ocasionar algum incêndio. Com isso, o nosso produto pode ser instalado nesses tipos de quadro para manter sempre uma temperatura agradável. A figura abaixo mostra um quadro com um ventilador instalado para essa finalidade.
 
-![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/Painel Eletrico.jpg)
+![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/Painel.jpg)
  
 Outra aplicação com esse projeto seria a instalação em mini-racks, com isso, a temperatura interna seria controlada, diminuindo o custo com energia.
  
@@ -303,7 +304,7 @@ Esse produto pode ser melhorado adicionando alguns equipamentos e aumentando as 
 Exemplo 01: Variação de temperatura.
 Caso o usuário queira variar a temperatura desejada, pode-se colocar um display com botões. Com isso, esse produto poderia ser utilizado tanto em locais mais frios como mais quentes, já que há uma facilidade maior de alterar a temperatura desejada. Na figura abaixo, é mostrado um modelo já comercializado de como isso é possível.
 
-![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/Variador de temperatura.jpg)  
+![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/Variador.jpg)  
  
 Exemplo 02: Redução do controlador.
 Uma melhoria significativa do produto seria na troca do controlador. As funcionalidades e o programa embarcado são muito simples para esse projeto, com isso, um microcontrolador básico com menos memória, quantidade de pinos digitais e analógicos reduziria o custo. Além disso, o tamanho físico de uma placa eletrônica seria bem mais compacta, já que seria confeccionada com menos quantidade de trilhas e componentes, e integrando um microcontrolador PIC ou um ARM no lugar de um Arduino completo.

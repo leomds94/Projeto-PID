@@ -50,6 +50,8 @@ void loop(){
 
 ### **2ª etapa:  Controlamos a velocidade do motor**
 
+![Alt Text](https://github.com/leomds94/Projeto-PID/raw/master/imagens/esquematico3.png)
+
 Essa etapa é bastante simples. O próprio cooler tem um circuito interno que permite você regular a temperatura. Para isso basta você conectar o fio azul na saída de uma porta com pwm. Assim, dependendo do valor que você colocar no pwm ele irá rodar mais rápido ou mais devagar.
 Para ajudar a ver os efeitos, adicionamos um código que nos permite digitar o valor que queremos para o pwm através do terminal. 
 

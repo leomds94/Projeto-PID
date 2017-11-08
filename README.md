@@ -227,6 +227,7 @@ O cálculo da saída é bem parecido ao ITerm porque também tem que se enquadra
 
 Os valores de outMin e outMax são calculados na função a seguir:
 
+```
 void SetOutputLimits(double Min, double Max) 
 {
 	if(Min > Max) return;
@@ -239,7 +240,7 @@ void SetOutputLimits(double Min, double Max)
 	if(ITerm> outMax) ITerm= outMax;
 	else if(ITerm< outMin) ITerm= outMin;
 } 
- 
+```
 
 De acordo com os testes feitos, os valores atribuídos são:
 
@@ -254,6 +255,7 @@ A melhoria de Initialization é utilizada quando o controlador inicializa sem ca
 
 A programação executa a função “initialize()” quando o controlador inicializa o modo “automático” e parte com os valores como se ele estivesse sempre nesse modo.
 
+```
 bool inAuto = false; 
 #define MANUAL 0
 #define AUTOMATIC 1
@@ -277,6 +279,7 @@ void Initialize()
 	if(ITerm> outMax) ITerm= outMax;
 	else if(ITerm< outMin) ITerm= outMin;
 }
+```
 
 ### **4.7 CONTROLLER DIRECTION
 

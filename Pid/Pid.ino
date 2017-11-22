@@ -69,6 +69,8 @@ void SetOutputLimits(double Min, double Max)
  if(ITerm> outMax) ITerm= outMax;
  else if(ITerm< outMin) ITerm= outMin;
 }
+
+// Modificar kp, ki e kd manualmente
 void SetTunings(double Kp, double Ki, double Kd){
  double SampleTimeInSec = ((double)SampleTime)/1000;
  kp = Kp;
@@ -77,6 +79,7 @@ void SetTunings(double Kp, double Ki, double Kd){
 
 }
 
+// Tempo de leitura de amostra
 void SetSampleTime(int NewSampleTime) {
   if (NewSampleTime > 0) {
     double ratio = (double)NewSampleTime / (double)SampleTime;
@@ -86,6 +89,7 @@ void SetSampleTime(int NewSampleTime) {
   }
 }
 
+// Ajustar manual e automático
 void SetMode(int Mode)
 {
     bool newAuto = (Mode == AUTOMATIC);
@@ -138,7 +142,7 @@ void loop () {
   // Realizando o PID
   Compute();
 
-  //Realizando pid no RPM
+  //Saída no RPM com PID ajustado
   rpmValue = temp * (Output / 100);
 
 

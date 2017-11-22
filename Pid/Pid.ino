@@ -129,6 +129,9 @@ void loop () {
   //Saída no RPM com PID ajustado
   rpmValue = temp * (Output / 10);
 
+  if(Serial.available() > 0) {
+    string values = Serial.readString();
+  }
 
   // Mostrando no serial port os dados PID e Erro
   sprintf(buf, "P: %d", kp);
@@ -144,7 +147,9 @@ void loop () {
   delay (1000);
 
   // Mostrando pwm que regula a velocidade do cooler
-  sprintf(buf, "PWM: %d", value);
+  sprintf(buf, "RPM: %d", rpmValue);
+  sprintf(buf, "TEMP: %d", temp);
+      
   rpmValue = value * 8;
   Serial.println(buf);
 

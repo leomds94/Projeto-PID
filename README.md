@@ -214,6 +214,56 @@ NbTopsFan = 0;
 
 ### **4.1 SAMPLE TIME
 
+Tanto o cálculo integral quanto o derivativo são diretamente influenciado pelo tempo. Logo intervalos de tempos irregulares pode gerar resultados irregulares. Assim, se o PID for chamado em intervalos constantes de tempos, os resultados serão bem mais consistente. 
+
+Após a implementação de uma amostra de tempo, pode-se perceber uma diferença muito significativa, principalmente no derivativo. Antes o derivativo parecia descontrolado. Agora ele varia com mais estabilidade.
+
+...ino
+unsigned long lastTime;
+double Input, Output, Setpoint;
+double errSum, lastErr;
+double kp, ki, kd;
+int SampleTime = 1000; //1 sec
+void Compute()
+{
+   unsigned long now = millis();
+   int timeChange = (now - lastTime);
+   if(timeChange>=SampleTime)
+   {
+      /*Compute all the working error variables*/
+      double error = Setpoint - Input;
+      errSum += error;
+      double dErr = (error - lastErr);
+ 
+      /*Compute PID Output*/
+      Output = kp * error + ki * errSum + kd * dErr;
+ 
+      /*Remember some variables for next time*/
+      lastErr = error;
+      lastTime = now;
+   }
+}
+ 
+void SetTunings(double Kp, double Ki, double Kd)
+{
+  double SampleTimeInSec = ((double)SampleTime)/1000;
+   kp = Kp;
+   ki = Ki * SampleTimeInSec;
+   kd = Kd / SampleTimeInSec;
+}
+ 
+void SetSampleTime(int NewSampleTime)
+{
+   if (NewSampleTime > 0)
+   {
+      double ratio  = (double)NewSampleTime
+                      / (double)SampleTime;
+      ki *= ratio;
+      kd /= ratio;
+      SampleTime = (unsigned long)NewSampleTime;
+   }
+}
+...ino
 ### **4.2 DERIVATIVE KICK
 
 ### **4.3 ON-THE-FLY TUNING CHANGES

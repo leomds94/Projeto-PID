@@ -14,7 +14,7 @@ int rpmValue = 0;
 
 unsigned long lastTime;
 double Input, Output, Setpoint, errSum, lastInput;
-double kp, ki, kd;
+double kp = 4, ki = 0.2, kd = 0.15;
 int SampleTime = 1000;
 
 double ITerm, outMax, outMin;

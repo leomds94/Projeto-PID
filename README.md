@@ -218,7 +218,7 @@ Tanto o cálculo integral quanto o derivativo são diretamente influenciado pelo
 
 Após a implementação de uma amostra de tempo, pode-se perceber uma diferença muito significativa, principalmente no derivativo. Antes o derivativo parecia descontrolado. Agora ele varia com mais estabilidade.
 
-...ino
+```ino
 unsigned long lastTime;
 double Input, Output, Setpoint;
 double errSum, lastErr;
@@ -263,7 +263,7 @@ void SetSampleTime(int NewSampleTime)
       SampleTime = (unsigned long)NewSampleTime;
    }
 }
-...ino
+```
 ### **4.2 DERIVATIVE KICK
 
 ### **4.3 ON-THE-FLY TUNING CHANGES

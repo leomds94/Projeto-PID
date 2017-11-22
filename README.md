@@ -265,7 +265,7 @@ Quando há uma mudança no setpoint uma alteração brusca no erro acontece. Iss
 
 Mas no nosso caso essa alteração não fez muita diferença, pois o efeito do derivativo não surte muito efeito, pois não a mudança brusca de temperatura. 
 
-...
+```ino
 
 double errSum, lastInput;
 double kp, ki, kd;
@@ -289,7 +289,7 @@ void Compute()
       ...
    }
 }
-...
+```
 
 ### **4.3 ON-THE-FLY TUNING CHANGES
 

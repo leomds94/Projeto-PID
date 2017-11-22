@@ -27,8 +27,6 @@ int i = 0;
 float temp = 0;
 char buf[20];
 
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-
 // Pegando tempo do pulso da porta de controle do cooler
 void getRpm () {
   pulseDuration = pulseIn(coolerState, LOW);
@@ -43,7 +41,7 @@ void Compute(){
  int timeChange = (now - lastTime);
  if(timeChange>=SampleTime){
   double error = Setpoint - Input;
-  double outTranslate = map(temp, 18, 50, 0, 255);
+  double outTranslate = map(temp, 18, 50, 140, 255);
   ITerm += (ki * error);
   if (ITerm > outMax) ITerm = outMax;
   else if (ITerm < outMin) ITerm = outMin;
@@ -122,20 +120,6 @@ void loop () {
   // Transformar temperatura analógica em celsius
   temp = (float(analogRead(tempsensor)) * 5 / (1023)) / 0.01;
 
-  // Mostrar temperatura no display LCD
-  lcd.setCursor(0, 0);
-  char str_temp[10];
-  dtostrf(temp, 4, 2, str_temp);
-  sprintf(buf, "Temp: %s", str_temp);
-  Serial.println(buf);
-  lcd.print(buf);
-
-  // Mostrar RPM no LCD
-  lcd.setCursor(0, 1);
-  sprintf(buf, "%d rpm", rpmValue);
-  Serial.println(buf);
-  lcd.print(buf);
-
   // Regra de três entre temperatura e RPM estimado
   Input = map(temp, 18, 50, 0, 255);
 
@@ -143,7 +127,7 @@ void loop () {
   Compute();
 
   //Saída no RPM com PID ajustado
-  rpmValue = temp * (Output / 100);
+  rpmValue = temp * (Output / 10);
 
 
   // Mostrando no serial port os dados PID e Erro

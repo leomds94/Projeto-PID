@@ -261,6 +261,36 @@ void SetSampleTime(int NewSampleTime)
 ```
 ### **4.2 DERIVATIVE KICK
 
+Quando há uma mudança no setpoint uma alteração brusca no erro acontece. Isso ocorre porque a derivada dessa mudança gera um número muito grande.  Felizmente a solução é bastante simples. 
+
+Mas no nosso caso essa alteração não fez muita diferença, pois o efeito do derivativo não surte muito efeito, pois não a mudança brusca de temperatura. 
+
+...
+
+double errSum, lastInput;
+double kp, ki, kd;
+int SampleTime = 1000; //1 sec
+void Compute()
+{
+   unsigned long now = millis();
+   int timeChange = (now - lastTime);
+   if(timeChange>=SampleTime)
+   {
+      ...
+      ...
+      double dInput = (Input - lastInput);
+ 
+      /*Compute PID Output*/
+      Output = kp * error + ki * errSum - kd * dInput;
+ 
+      /*Remember some variables for next time*/
+      lastInput = Input;
+      ...
+      ...
+   }
+}
+...
+
 ### **4.3 ON-THE-FLY TUNING CHANGES
 
 ### **4.4 RESET WINDUP MITIGATION

@@ -293,6 +293,21 @@ void Compute()
 
 ### **4.3 ON-THE-FLY TUNING CHANGES
 
+A melhoria 'On-The-Fly Tunning Changes' permite ao usuário modificar os valores de Kp, Ki e Kd em tempo de execução.
+
+Isto evita que seja necessário parar o sistema para modificar os valores das constantes assim podendo gerar um superaquecimento sem uma ação imediata do controlador PID para aumentar o RPM.
+
+A implementação desta funcionalidade é simples como mostrada a seguir:
+
+...
+void SetTunings(double Kp, double Ki, double Kd){
+ double SampleTimeInSec = ((double)SampleTime)/1000;
+ kp = Kp;
+ ki = Ki * SampleTimeInSec;
+ kd = Kd / SampleTimeInSec;
+}
+...
+
 ### **4.4 RESET WINDUP MITIGATION
 
 A melhoria de Reset Windup cria limites, de máximo e mínimo, para o cálculo do ki e para a saída.

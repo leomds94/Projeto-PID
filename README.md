@@ -339,6 +339,26 @@ De acordo com os testes feitos, os valores atribuídos são:
 	
 ### **4.5 ON/OFF (AUTO/MANUAL)
 
+A melhoria de 'Auto/Manual' é utilizada para que em tempo de execução seja possível a mudança do modo de operação do controlador PID.
+
+Isso também deixa o sistema mais prático e funcional pois realiza uma mudança de modo sem precisar desligar o controlador, assim evitando problemas entre o desligamento e o ligamento.
+
+O código referente a mudança de modo 'auto/manual' é simples como pode ser visto a seguir:
+
+```ino
+
+void SetMode(int Mode)
+{
+    bool newAuto = (Mode == AUTOMATIC);
+    if(newAuto && !inAuto)
+    {  /*we just went from manual to auto*/
+        Initialize();
+    }
+    inAuto = newAuto;
+}
+
+```
+
 ### **4.6 INITIALIZATION
 
 A melhoria de Initialization é utilizada quando o controlador inicializa sem carga ou retorna ao seu estado de automático. Nas duas ocasiões, o controlador pode imprimir um valor de saída muito indesejado, como algo bem distante do SetPoint. 

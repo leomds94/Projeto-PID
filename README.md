@@ -299,14 +299,14 @@ Isto evita que seja necessário parar o sistema para modificar os valores das co
 
 A implementação desta funcionalidade é simples como mostrada a seguir:
 
-...ino
+```ino
 void SetTunings(double Kp, double Ki, double Kd){
  double SampleTimeInSec = ((double)SampleTime)/1000;
  kp = Kp;
  ki = Ki * SampleTimeInSec;
  kd = Kd / SampleTimeInSec;
 }
-...
+```
 
 ### **4.4 RESET WINDUP MITIGATION
 
@@ -317,7 +317,7 @@ O cálculo da saída é bem parecido ao ITerm porque também tem que se enquadra
 
 Os valores de outMin e outMax são calculados na função a seguir:
 
-```
+```ino
 void SetOutputLimits(double Min, double Max) 
 {
 	if(Min > Max) return;
@@ -345,7 +345,7 @@ A melhoria de Initialization é utilizada quando o controlador inicializa sem ca
 
 A programação executa a função “initialize()” quando o controlador inicializa o modo “automático” e parte com os valores como se ele estivesse sempre nesse modo.
 
-```
+```ino
 bool inAuto = false; 
 #define MANUAL 0
 #define AUTOMATIC 1

@@ -210,9 +210,9 @@ NbTopsFan = 0;
 ```
 
 
-## **4. MELHORIAS
+## **4. MELHORIAS**
 
-### **4.1 SAMPLE TIME
+### **4.1 SAMPLE TIME**
 
 Tanto o cálculo integral quanto o derivativo são diretamente influenciado pelo tempo. Logo intervalos de tempos irregulares pode gerar resultados irregulares. Assim, se o PID for chamado em intervalos constantes de tempos, os resultados serão bem mais consistente. 
 
@@ -259,7 +259,7 @@ void SetSampleTime(int NewSampleTime)
    }
 }
 ```
-### **4.2 DERIVATIVE KICK
+### **4.2 DERIVATIVE KICK**
 
 Quando há uma mudança no setpoint uma alteração brusca no erro acontece. Isso ocorre porque a derivada dessa mudança gera um número muito grande.  Felizmente a solução é bastante simples. 
 
@@ -291,7 +291,7 @@ void Compute()
 }
 ```
 
-### **4.3 ON-THE-FLY TUNING CHANGES
+### **4.3 ON-THE-FLY TUNING CHANGES**
 
 A melhoria 'On-The-Fly Tunning Changes' permite ao usuário modificar os valores de Kp, Ki e Kd em tempo de execução.
 
@@ -308,7 +308,7 @@ void SetTunings(double Kp, double Ki, double Kd){
 }
 ```
 
-### **4.4 RESET WINDUP MITIGATION
+### **4.4 RESET WINDUP MITIGATION**
 
 A melhoria de Reset Windup cria limites, de máximo e mínimo, para o cálculo do ki e para a saída.
 
@@ -334,10 +334,10 @@ void SetOutputLimits(double Min, double Max)
 
 De acordo com os testes feitos, os valores atribuídos são:
 
-	outMin = 0;
+	outMin = 140;
 	outMax = 255;
 	
-### **4.5 ON/OFF (AUTO/MANUAL)
+### **4.5 ON/OFF (AUTO/MANUAL)**
 
 A melhoria de 'Auto/Manual' é utilizada para que em tempo de execução seja possível a mudança do modo de operação do controlador PID.
 
@@ -359,7 +359,7 @@ void SetMode(int Mode)
 
 ```
 
-### **4.6 INITIALIZATION
+### **4.6 INITIALIZATION**
 
 A melhoria de Initialization é utilizada quando o controlador inicializa sem carga ou retorna ao seu estado de automático. Nas duas ocasiões, o controlador pode imprimir um valor de saída muito indesejado, como algo bem distante do SetPoint. 
 
@@ -391,7 +391,7 @@ void Initialize()
 }
 ```
 
-### **4.7 CONTROLLER DIRECTION
+### **4.7 CONTROLLER DIRECTION**
 
 
 ## **5.    CONCLUSÃO**

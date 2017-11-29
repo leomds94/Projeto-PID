@@ -391,8 +391,6 @@ void Initialize()
 }
 ```
 
-### **4.7 CONTROLLER DIRECTION**
-
 
 ## **5.    CONCLUSÃO**
  
